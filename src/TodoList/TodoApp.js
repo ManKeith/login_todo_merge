@@ -22,7 +22,7 @@ class TodoApp extends React.Component{
     super(props);
     this.state={
       allItems:JSON.parse(localStorage.getItem('allItems'))||[],
-      items:JSON.parse(localStorage.getItem('allItems'))||[],
+      items:JSON.parse(localStorage.getItem('items'))||[],
       isFiltered:false,
       currentItem:{
         text:'',
