@@ -3,7 +3,8 @@ import React from 'react';
 import TodoItems from './TodoItems';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import{faTrash} from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import {createTodo} from '../store/action/todoAction'
 library.add(faTrash)
 
 // function App() {
