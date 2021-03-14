@@ -1,0 +1,57 @@
+.list{
+    color: aliceblue;
+    width: 600px;
+    height: 40px;
+    background-color: transparent ;
+    font-size: 20px;
+    font-weight: bolder;
+    border-radius: 10px;
+    margin: 30px auto;
+    /* padding-top: 15px; */
+    
+}
+
+.list div{
+    background-color: rgba(97, 107, 122, 0.685);
+    padding-top: 10px;
+    padding: 5px;
+    border-radius: 10px;
+    position: relative;
+}
+.list div p{
+    background-color: transparent;
+    position: absolute;
+    cursor:pointer;
+    color: white;
+}
+.list div span{
+    background-color: transparent;
+    position: absolute;
+    cursor:pointer;
+}
+.faicons{
+    margin:0 5px;
+    font-size: 20px;
+}
+.list div input{
+    background-color:  transparent;
+    width:500px;
+    border: 0px;
+    color: white;
+    font-size: 20px;
+}
+.list div input:focus{
+    outline:none;
+}
+#checkTask label input{
+    width:450px;
+}
+#checkTask label input{
+    width:450px;
+}
+#checkTask span{
+    padding-top: 10px;
+}
+#checkTask label span{
+    padding-top: 10px;
+}
