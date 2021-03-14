@@ -3,6 +3,7 @@ import React from 'react';
 import TodoItems from './TodoItems';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import{faTrash} from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux'
 library.add(faTrash)
 
 // function App() {
@@ -20,8 +21,8 @@ class TodoApp extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      allItems:[],
-      items:[],
+      allItems:JSON.parse(localStorage.getItem('allItems'))||[],
+      items:JSON.parse(localStorage.getItem('allItems'))||[],
       isFiltered:false,
       currentItem:{
         text:'',
@@ -52,7 +53,7 @@ class TodoApp extends React.Component{
       this.setState({
         allItems:allItems,
         items:items
-      })
+      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
       })
 }
   setUpdate(text,key,checked){
@@ -65,7 +66,7 @@ class TodoApp extends React.Component{
       }
       this.setState({
         items:items
-      })
+      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
     })
   }
   
@@ -78,14 +79,14 @@ class TodoApp extends React.Component{
         this.setState({
           items: filteredItems,
           isFiltered:true
-        })
+        },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
     }
     else{
         
         this.setState({
           items: this.state.allItems,
           isFiltered:false
-        })
+        },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
     }
   }
   deleteItem(key){
@@ -96,7 +97,7 @@ class TodoApp extends React.Component{
       this.setState({
         allItems: filteredItems,
         items:filteredFItems
-      })
+      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
   }
   handleInput(e){
     this.setState({
@@ -106,7 +107,7 @@ class TodoApp extends React.Component{
         checked:false
       },
       isFiltered:false
-    })
+    },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
   }
   addItem(e){
     e.preventDefault();
@@ -123,8 +124,10 @@ class TodoApp extends React.Component{
           checked:false
         },
         isFiltered:false
-      })
+      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+      
       }
+      console.log(JSON.stringify(this.state.allItems))
     }
 
 
@@ -169,4 +172,10 @@ class TodoApp extends React.Component{
   }
 }
 
-export default TodoApp;
+const mapStateToProps = (state) => {
+  return {
+    allItems: state.allItems
+  }
+}
+
+export default  connect(mapStateToProps)(TodoApp);
