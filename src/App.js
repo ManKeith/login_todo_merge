@@ -4,6 +4,7 @@ import Navbar from './Components/TopBar/Navbar';
 import SignIn from './Components/AccountManage/SignIn'
 import SignUp from './Components/AccountManage/SignUp'
 import TodoApp from './TodoList/TodoApp'
+import TodoRedux from './Todo_Redux/TodoDashboard'
 class App extends Component{
   render() {
     return(
@@ -15,6 +16,7 @@ class App extends Component{
         <Route path = '/signin' component={SignIn}/>
         <Route path = '/signup' component={SignUp}/>
         <Route path ='/' component={TodoApp}/>
+        {/* <Route path ='/todoredux' component={TodoRedux}/> */}
       </Switch>
       </BrowserRouter>
     )

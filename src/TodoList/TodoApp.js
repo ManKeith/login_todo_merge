@@ -4,6 +4,7 @@ import TodoItems from './TodoItems';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import{faTrash} from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 library.add(faTrash)
 
 // function App() {
@@ -132,6 +133,8 @@ class TodoApp extends React.Component{
 
 
   render(){
+    const { auth } = this.props;
+    // if (!auth.uid) return <Redirect to='/Signin' /> 
     return(
       
       <div className="outterBox">
@@ -174,7 +177,8 @@ class TodoApp extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-    allItems: state.allItems
+    allItems: state.allItems,
+    auth : state.firebase.auth
   }
 }
 
