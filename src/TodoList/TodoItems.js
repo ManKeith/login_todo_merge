@@ -1,6 +1,6 @@
 import React from 'react';
 import './TodoItems.css';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 import {FontAwesomeIcon, FontAwesomeicon} from '@fortawesome/react-fontawesome';
 function TodoItems(props){
     const items =props.items;

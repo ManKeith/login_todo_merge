@@ -10,7 +10,7 @@ import { applyMiddleware, createStore ,compose} from 'redux';
 import rootReducer from './store/reducers/rootReducer';
 import firebaseConfig from './Components/config/firebaseConfig'
 import thunk from 'redux-thunk'
-import firebase from 'firebase/app'
+//import firebase from 'firebase/app'
 
 
 const store = createStore(rootReducer,
@@ -20,6 +20,7 @@ const store = createStore(rootReducer,
     reduxFirestore(firebaseConfig) 
   )
 );
+
 
 store.firebaseAuthIsReady.then(()=>{
 ReactDOM.render(

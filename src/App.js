@@ -3,8 +3,9 @@ import {BrowserRouter, Switch,Route} from 'react-router-dom'
 import Navbar from './Components/TopBar/Navbar';
 import SignIn from './Components/AccountManage/SignIn'
 import SignUp from './Components/AccountManage/SignUp'
+import App_ from './Todo_test/TodoApp'
 import TodoApp from './TodoList/TodoApp'
-import TodoRedux from './Todo_Redux/TodoDashboard'
+//import TodoDashboard from './Todo_Redux/TodoDashboard'
 class App extends Component{
   render() {
     return(
@@ -15,8 +16,8 @@ class App extends Component{
       <Switch>
         <Route path = '/signin' component={SignIn}/>
         <Route path = '/signup' component={SignUp}/>
-        <Route path ='/' component={TodoApp}/>
-        {/* <Route path ='/todoredux' component={TodoRedux}/> */}
+        <Route path ='/a' component={TodoApp}/>
+        <Route path ='/' component={App_}/>
       </Switch>
       </BrowserRouter>
     )
