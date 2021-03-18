@@ -5,7 +5,8 @@ const SignOutBar = () =>{
     <ul className="right">
         <li><NavLink to='/Signup'>Sign up</NavLink></li>
         <li><NavLink to='/Signin'>Sign in</NavLink></li>
-        <li><NavLink to='/Todor'>testing</NavLink></li>
+        
+        {/* <li><NavLink to='/Todor'>testing</NavLink></li> */}
     </ul>
     )
 }

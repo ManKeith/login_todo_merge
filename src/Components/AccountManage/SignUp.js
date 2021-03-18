@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {signUp} from '../../store/actions/authAction'
 import { Redirect } from 'react-router-dom'
+import "./Signup.css"
 class SignUp extends Component{
     state = {
         username:'',
@@ -19,20 +20,20 @@ class SignUp extends Component{
     }
     render(){
         const { auth, authError } = this.props;
-        // if (auth.uid) return <Redirect to='/' /> 
+        if (auth.uid) return <Redirect to='/' /> 
         return(
             <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3"> Sign Up</h5>
-                    <div className = "input-field">
-                        <label htmlFor="username">User Name</label>
+                <form id="right" onSubmit={this.handleSubmit} >
+                    <h3 > Sign Up</h3>
+                    <div id="uname" className = "input-field">
+                        <label  htmlFor="username">User Name</label>
                         <input type = "text" id="username" onChange={this.handleChange}/>
                     </div>
-                    <div className = "input-field">
+                    <div id="email" className = "input-field">
                         <label htmlFor="email">E-mail</label>
                         <input type = "email" id="email" onChange={this.handleChange}/>
                     </div>
-                    <div className = "input-field">
+                    <div id="pw" className = "input-field">
                         <label htmlFor="password">Password</label>
                         <input type = "password" id="password" onChange={this.handleChange}/>
                     </div>

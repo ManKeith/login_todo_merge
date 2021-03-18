@@ -1,48 +1,94 @@
+body{
+  background-color: #5a5a5ad2;
+  background-image: url(./bg.jpeg);
+  background-repeat: no-repeat;
+  background-size: 2400px 1650px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
 .App {
     text-align: center;
   }
-  .outterBox_{
-    text-align: center;
-    background-color: #c5c2c29d;
-    min-height: 800px;
-    width: 650px;
-    margin : 40px auto;
-    border-radius: 20px;
-    padding-bottom: 20px;
+.outterBox_{
+  text-align: center;
+  background-color: #c5c2c29d;
+  min-height: 800px;
+  width: 650px;
+  margin : 40px auto;
+  border-radius: 20px;
+  padding-bottom: 20px;
     
   }
-  .App-logo {
-    height: 40vmin;
-    pointer-events: none;
+  #header_todo{
+    margin : 40px auto;
   }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
+  #todo-form input{
+    background-color: rgb(222, 223, 224);
+    border: 0;
+    width: 350px;
+    height: 40px;
+    padding: 0 20px;
+    margin: 20px;
+    border-radius: 20px;
+    font-size: 18px;
+    color: rgba(5, 20, 34, 0.705);
   }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  #todo-form input::placeholder{
+    color: #434e64;
   }
-  
+  #todo-form input:focus{
+    outline: none;
+  }
+  #todo-form button{
+    height: 40px;
+    width:50px;
+    border-radius:10px;
+    border:0;
+    background-color: #47aec0;
+    cursor:pointer;
+    font-weight:bolder;
+    color: #282c34;
+  }
+  #filterBox{
+    height:20px;
+    color: #101216;
+    font-weight:bolder;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  #filterBox span{
+    font-size: 20px;
+  }
+  #itemsList{
+    background-color: rgba(255, 255, 255, 0.486);
+    margin-top: 10px;
+    /* padding-top: 1000px; */
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 2.5em
+    
+  }
+  #itemsContent{
+    background-color: rgba(121, 121, 121, 0.26);
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+#DLbox{
+  width:400px;
+  background-color: rgba(121, 121, 121, 0.26);
+}
+#DLbox_text{
+  margin: 10px;
+  padding: 10px;
+  font-size: 20px;
+}
+#DLactions{
+  background-color: rgba(121, 121, 121, 0.26);
+}
   .App-link {
     color: #61dafb;
   }
 
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+
   

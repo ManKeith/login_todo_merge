@@ -1,0 +1,29 @@
+#right{
+    background-color: rgba(197, 191, 191, 0.281);
+    border-radius: 20px;
+    padding: 15px;
+}
+#uname label{
+    color: black;
+    font-size: 18px;
+}
+#uname input{
+    color: black;
+    font-size: 18px;
+}
+#email label{
+    color: black;
+    font-size: 18px;
+}
+#email input{
+    color: black;
+    font-size: 18px;
+}
+#pw label{
+    color: black;
+    font-size: 18px;
+}
+#pw input{
+    color: black;
+    font-size: 18px;
+}
