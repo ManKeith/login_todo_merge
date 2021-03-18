@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {signIn} from '../../store/actions/authAction'
 import { Redirect } from 'react-router-dom'
-
+import './SignIn.css'
 class SignIn extends Component{
     state = {
         email:'',
@@ -19,16 +19,16 @@ class SignIn extends Component{
     }
     render(){
         const { authError, auth } = this.props;
-        // if (auth.uid) return <Redirect to='/' /> 
+        if (auth.uid) return <Redirect to='/' /> 
         return(
             <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <h3 className="grey-text text-darken-3"> Sign In</h3>
-                    <div className = "input-field">
+                <form onSubmit={this.handleSubmit} id='right'>
+                    <h3 id="Signin"> Sign In</h3>
+                    <div id="email" className = "input-field">
                         <label htmlFor="email">E-mail</label>
                         <input type = "email" id="email" onChange={this.handleChange}/>
                     </div>
-                    <div className = "input-field">
+                    <div id="pw" className = "input-field">
                         <label htmlFor="password">Password</label>
                         <input type = "password" id="password" onChange={this.handleChange}/>
                     </div>

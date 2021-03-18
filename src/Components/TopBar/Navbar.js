@@ -5,12 +5,19 @@ import SignOutBar from './SignOutBar'
 import {connect} from 'react-redux'
 const Navbar = (props) =>{
     const { auth } = props;
-    console.log(auth);
+    //console.log(auth);
     const BarItemShown = auth.uid ? <SignInBar/> : <SignOutBar/>;
+    var linkto = new String(""); 
+    if(auth.id){
+      linkto = "/"
+    }
+    else{
+      linkto ="/Signin"
+    }
     return(
     <nav className="nav-wrapper grey darken-3">
       <div className="container">
-        <Link to='/' className="brand-logo">TODO</Link>
+        <Link to={linkto} className="brand-logo">TODO</Link>
       { BarItemShown }
       </div>
     </nav>

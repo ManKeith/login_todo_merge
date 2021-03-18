@@ -1,176 +1,218 @@
-import React, { useState, useEffect } from 'react';
-import './TodoApp.css';
-import firebase from '../Components/config/firebaseConfig'
+import React, { useState, useEffect } from "react";
+import "./TodoApp.css";
+import firebase from "../Components/config/firebaseConfig";
+import { Redirect } from 'react-router-dom'
 // import firebase from 'firebase';
-import { AddCircleOutlineRounded, DeleteOutlineRounded, Edit } from '@material-ui/icons';
-import { Button, TextField, Container, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, Dialog, DialogContent, DialogActions } from '@material-ui/core';
+import {
+  DeleteOutlineRounded,
+  Edit
+} from "@material-ui/icons";
+import {
+  Button,
+  TextField,
+  Container,
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Dialog,
+  DialogContent,
+  DialogActions
+} from "@material-ui/core";
 const firestore = firebase.firestore();
 
 function App() {
-
   const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState('');
-  const [toUpdateId, setToUpdateId] = useState('');
+  const [update, setUpdate] = useState("");
+  const [toUpdateId, setToUpdateId] = useState("");
   const [isDone, setIsDone] = useState(false);
- 
-  //const [isChecked, setisChecked] = useState('');
- const filterID=  "bNREmY6c40RYpDyh4bRL";
- var isFilter = new Boolean(false);
- var isLocalFilter = new Boolean(false);
- var filteredTodo = todos;
-//  console.log(filteredTodo);
- isFilter=firestore.collection('Filter').doc(filterID).isFilter;
- //console.log('isFilter:' +isFilter)
- isLocalFilter=isFilter;
-  useEffect(() => {
-    firestore.collection('todos').orderBy('datetime', 'desc').onSnapshot(snapshot => {
-      setTodos(snapshot.docs.map(doc => {
-        return {
-          id: doc.id,
-          name: doc.data().todo,
-          datatime: doc.data().datatime,
-          isDone: doc.data().isDone
-        }
-      }))
-    })
+  const [isFilter, setIsFilter] = useState(false);
+  const [filteredTodo, setFilteredTodo] = useState([]);
 
+  const filterID = "bNREmY6c40RYpDyh4bRL";
+
+  useEffect(() => {
+    firestore
+      .collection("todos")
+      .orderBy("datetime", "asc")
+      .onSnapshot((snapshot) => {
+        setTodos(
+          snapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              name: doc.data().todo,
+              datatime: doc.data().datatime,
+              isDone: doc.data().isDone
+            };
+          })
+        );
+      });
   }, []);
 
   const addTodo = (event) => {
     event.preventDefault();
-    firestore.collection('todos').add({
+    if(input !==""){
+    firestore.collection("todos").add({
       todo: input,
       datetime: firebase.firestore.FieldValue.serverTimestamp(),
-      isDone:false
-    })
-    setInput('');
-  }
+      isDone: false
+    });
+    }
+    setInput("");
+  };
 
   const deleteTodo = (id) => {
-    firestore.collection('todos').doc(id).delete().then(res => {
-      console.log('Deleted!', res);
-    });
-  }
+    firestore
+      .collection("todos")
+      .doc(id)
+      .delete()
+      .then((res) => {
+        console.log("Deleted!", res);
+      });
+  };
 
   const openUpdateDialog = (todo) => {
     setOpen(true);
     setToUpdateId(todo.id);
     setUpdate(todo.name);
-  }
+  };
 
   const editTodo = (id) => {
-    firestore.collection('todos').doc(id).update({
+    firestore.collection("todos").doc(toUpdateId).update({
       todo: update
     });
     setOpen(false);
-  }
+  };
 
   const handleClose = () => {
     setOpen(false);
   };
- const updateDone =(todo) =>{
-    firestore.collection('todos').doc(todo.id).update({
-        isDone: !todo.isDone
+  const updateDone = (todo) => {
+    firestore.collection("todos").doc(todo.id).update({
+      isDone: !todo.isDone
     });
- }
-const filterDone = () => {
-    if(isLocalFilter){
-        toFilter(todos);
+  };
+  const toFilter = (todos) => {
+    //console.log(todos.id)
+    setTodos(todos.filter((todo) => todo.isDone === true));
+  };
+  const notFilter = (todos) => {
+    firestore
+      .collection("todos")
+      .orderBy("datetime", "desc")
+      .onSnapshot((snapshot) => {
+        setTodos(
+          snapshot.docs.map((doc) => {
+            return {
+              id: doc.id,
+              name: doc.data().todo,
+              datatime: doc.data().datatime,
+              isDone: doc.data().isDone
+            };
+          })
+        );
+      });
+    console.log(firestore.collection("todos"));
+    //setTodos();
+  };
+  const filterDone = () => {
+    if (isFilter) {
+      notFilter(todos);
+      setIsFilter(false);
+    } else {
+      toFilter(todos);
+      setIsFilter(true);
     }
-    else{
-       filteredTodo = todos;
-    }
-    firestore.collection('Filter').doc(filterID).update({
-        isFilter: !isLocalFilter
-  });
-    console.log(filteredTodo.id);
-    console.log(isLocalFilter);
-    isLocalFilter= !isLocalFilter;
- }
- const toFilter =(todos) =>{
-     console.log(todos.id)
-    filteredTodo =todos.filter(todo =>todo.isDone===true);
-    
- }
+    firestore.collection("Filter").doc(filterID).update({});
+    console.log("isFilter:" + isFilter);
+    //console.log(filteredTodo);
+  };
+
   return (
     <div className="outterBox_">
-    <h1>Todo List</h1>
-    <Container maxWidth="sm">
-    <form id="todo-form" noValidate>
-        <input 
-        type="text" 
-        placeholder="Add your task here." 
-        value={input}
-        autoFocus
-        onChange={event => setInput(event.target.value)}
-        />
-        <button type="submit" onClick={addTodo}>Add</button>
-    </form>
-    <label>
-        <input type="checkbox" checked={isFilter}
-            onClick={filterDone}
-        />
-        <span>Show completed task</span>
-    </label>
+      <h2 id="header_todo">Todo List</h2>
+      <Container maxWidth="sm">
+        <form id="todo-form" noValidate>
+          <input
+            type="text"
+            placeholder="Add your task here."
+            value={input}
+            autoFocus
+            onChange={(event) => setInput(event.target.value)}
+          />
+          <button type="submit" onClick={addTodo}>
+            Add
+          </button>
+        </form>
+        <label id="filterBox">
+          <input type="checkbox" checked={isFilter} onClick={filterDone} />
+          <span>Show completed task</span>
+        </label>
 
-      <List dense={true}>
-        {
-          todos.map(todo => (
-            
-            <ListItem key={filteredTodo.id} >
+        <List  dense={true}>
+          {todos.map((todo) => (
+            <ListItem id="itemsList" key={todo.id}>
               <label>
-                <input type="checkbox" checked={todo.isDone}
+                <input
+                  type="checkbox"
+                  checked={todo.isDone}
                   onChange={() => updateDone(todo)}
-              />
-              <span> </span>
+                />
+                <span> </span>
               </label>
-              <ListItemText
+              <ListItemText id="itemsContent"
                 primary={todo.name}
                 secondary={todo.datetime}
                 // tertiary={todo.isDone}
               />
 
               <ListItemSecondaryAction>
-                <IconButton edge="end" aria-label="Edit" onClick={() => openUpdateDialog(todo)}>
+                
+              </ListItemSecondaryAction>
+              <IconButton
+                  edge="end"
+                  aria-label="Edit"
+                  onClick={() => openUpdateDialog(todo)}
+                >
                   <Edit />
                 </IconButton>
-                <IconButton edge="end" aria-label="delete" onClick={() => deleteTodo(todo)}>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => deleteTodo(todo.id)}
+                >
                   <DeleteOutlineRounded />
                 </IconButton>
-              </ListItemSecondaryAction>
-
             </ListItem>
-          ))
-        }
-      </List>
+          ))}
+        </List>
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="normal"
-            label="Update Todo"
-            type="text"
-            fullWidth
-            name="updateTodo"
-            value={update}
-            onChange={event => setUpdate(event.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={editTodo} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-
-    </Container >
+        <Dialog id="DL" open={open} onClose={handleClose}>
+          <DialogContent id="DLbox">
+            <TextField id="DLbox_text"
+              autoFocus
+              margin="normal"
+              label="Update Todo"
+              type="text"
+              fullWidth
+              name="updateTodo"
+              value={update}
+              onChange={(event) => setUpdate(event.target.value)}
+            />
+          </DialogContent>
+          <DialogActions id="DLactions">
+            <Button onClick={handleClose} >
+              Cancel
+            </Button>
+            <Button onClick={editTodo} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Container>
     </div>
   );
 }
