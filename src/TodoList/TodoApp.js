@@ -3,27 +3,18 @@ import React from 'react';
 import TodoItems from './TodoItems';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import{faTrash} from '@fortawesome/free-solid-svg-icons';
-import { connect } from 'react-redux';
-import {createTodo} from '../store/action/todoAction'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 library.add(faTrash)
 
-// function App() {
-//   return (
-//     // <div className="App">
-//     //   <header className="App-header">
-//     //     <img src={logo} className="App-logo" alt="logo" />
-//     //     <h1>Hello World</h1>
-//     //   </header>
-//     // </div>
-//     <h1>Hello World</h1>
-//   );
-// }
 class TodoApp extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      allItems:JSON.parse(localStorage.getItem('allItems'))||[],
-      items:JSON.parse(localStorage.getItem('items'))||[],
+      allItems:[],
+      // JSON.parse(localStorage.getItem('allItems'))||[],
+      items: [],
+      // JSON.parse(localStorage.getItem('items'))||[],
       isFiltered:false,
       currentItem:{
         text:'',
@@ -54,7 +45,9 @@ class TodoApp extends React.Component{
       this.setState({
         allItems:allItems,
         items:items
-      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+      }
+      // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+      )
       })
 }
   setUpdate(text,key,checked){
@@ -67,7 +60,9 @@ class TodoApp extends React.Component{
       }
       this.setState({
         items:items
-      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+      }
+      // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+      )
     })
   }
   
@@ -80,14 +75,18 @@ class TodoApp extends React.Component{
         this.setState({
           items: filteredItems,
           isFiltered:true
-        },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+        }
+        // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+        )
     }
     else{
         
         this.setState({
           items: this.state.allItems,
           isFiltered:false
-        },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+        }
+        // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+        )
     }
   }
   deleteItem(key){
@@ -98,7 +97,9 @@ class TodoApp extends React.Component{
       this.setState({
         allItems: filteredItems,
         items:filteredFItems
-      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+      }
+      // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+      )
   }
   handleInput(e){
     this.setState({
@@ -108,7 +109,9 @@ class TodoApp extends React.Component{
         checked:false
       },
       isFiltered:false
-    },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+    }
+    // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+    )
   }
   addItem(e){
     e.preventDefault();
@@ -125,7 +128,9 @@ class TodoApp extends React.Component{
           checked:false
         },
         isFiltered:false
-      },localStorage.setItem('allItems', JSON.stringify(this.state.allItems)))
+      }
+      // ,localStorage.setItem('allItems', JSON.stringify(this.state.allItems))
+      )
       
       }
       console.log(JSON.stringify(this.state.allItems))
@@ -133,6 +138,8 @@ class TodoApp extends React.Component{
 
 
   render(){
+    const { auth } = this.props;
+    // if (!auth.uid) return <Redirect to='/Signin' /> 
     return(
       
       <div className="outterBox">
@@ -173,10 +180,4 @@ class TodoApp extends React.Component{
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    allItems: state.allItems
-  }
-}
-
-export default  connect(mapStateToProps)(TodoApp);
+export default TodoApp;

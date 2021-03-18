@@ -1,13 +1,16 @@
-const initState = {
-    allItems: JSON.parse(localStorage.getItem('allItems'))||[]
+const initState = {}
+
+const todoReducer = (state = initState, action) => {
+  switch (action.type) {
+    case 'CREATE_TODO_SUCCESS':
+      console.log('create todo success');
+      return state;
+    case 'CREATE_TODO_ERROR':
+      console.log('create todo error');
+      return state;
+    default:
+      return state;
   }
-  
-  const todoReducer = (state = initState, action) => {
-    switch (action.type) {
-      case 'CREATE_PROJECT':
-        console.log('create project', action.project);
-    }
-    return state;
-  };
-  
-  export default todoReducer;
+};
+
+export default todoReducer;
