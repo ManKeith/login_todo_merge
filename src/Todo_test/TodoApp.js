@@ -30,14 +30,14 @@ function App() {
   const [toUpdateId, setToUpdateId] = useState("");
   const [isDone, setIsDone] = useState(false);
   const [isFilter, setIsFilter] = useState(false);
-  const [filteredTodo, setFilteredTodo] = useState([]);
+//   const [filteredTodo, setFilteredTodo] = useState([]);
 
   const filterID = "bNREmY6c40RYpDyh4bRL";
 
   useEffect(() => {
     firestore
       .collection("todos")
-      .orderBy("datetime", "asc")
+      .orderBy("datetime", "desc")
       .onSnapshot((snapshot) => {
         setTodos(
           snapshot.docs.map((doc) => {
@@ -62,9 +62,12 @@ function App() {
     });
     }
     setInput("");
+    setIsFilter(false);
   };
 
   const deleteTodo = (id) => {
+    console.log("isFilter:" + isFilter);
+    console.log(todos)
     firestore
       .collection("todos")
       .doc(id)
@@ -72,6 +75,10 @@ function App() {
       .then((res) => {
         console.log("Deleted!", res);
       });
+      console.log("before delete:" + isFilter)
+      
+    toFilter(todos);
+    setIsFilter(false);
   };
 
   const openUpdateDialog = (todo) => {
@@ -85,6 +92,7 @@ function App() {
       todo: update
     });
     setOpen(false);
+    setIsFilter(false);
   };
 
   const handleClose = () => {
@@ -115,10 +123,12 @@ function App() {
           })
         );
       });
-    console.log(firestore.collection("todos"));
+    //console.log(firestore.collection("todos"));
     //setTodos();
   };
   const filterDone = () => {
+    //when the time user press = false => make it true and response true action
+    console.log("isFilter:" + isFilter);
     if (isFilter) {
       notFilter(todos);
       setIsFilter(false);
@@ -126,8 +136,8 @@ function App() {
       toFilter(todos);
       setIsFilter(true);
     }
-    firestore.collection("Filter").doc(filterID).update({});
-    console.log("isFilter:" + isFilter);
+    //firestore.collection("Filter").doc(filterID).update({});
+    
     //console.log(filteredTodo);
   };
 
